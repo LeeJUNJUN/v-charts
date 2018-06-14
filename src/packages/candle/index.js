@@ -5,8 +5,8 @@ import 'echarts/lib/chart/candlestick'
 import 'echarts/lib/component/visualMap'
 import 'echarts/lib/component/dataZoom'
 import { candle } from './main'
-import Core from '../../core'
 import numerify from 'numerify/lib/index.es'
+import Core from './v-charts-core'
 
 export default {
   name: 'VeCandle',

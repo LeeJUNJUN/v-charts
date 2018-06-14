@@ -4,8 +4,8 @@ import 'echarts/lib/component/visualMap'
 import 'echarts/extension/bmap/bmap'
 import 'echarts/lib/chart/map'
 import { heatmap } from './main'
-import Core from '../../core'
 import numerify from 'numerify/lib/index.es'
+import Core from './v-charts-core'
 export default {
   name: 'VeHeatmap',
   mixins: [Core],

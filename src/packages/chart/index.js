@@ -5,8 +5,8 @@ import { pie, ring } from '../pie/main'
 import { funnel } from '../funnel/main'
 import { radar } from '../radar/main'
 import { waterfall } from '../waterfall/main'
-import Core from '../../core'
 import numerify from 'numerify/lib/index.es'
+import Core from './v-charts-core'
 export default {
   name: 'VeChart',
   mixins: [Core],

@@ -8,6 +8,8 @@ const componentInfo = require('../src/component-list')
 const uglify = require('rollup-plugin-uglify').uglify
 const autoprefixer = require('autoprefixer')
 const cssnano = require('cssnano')
+const alias = require('rollup-plugin-alias')
+const path = require('path')
 
 let pkg = []
 const pkgTypeList = [
@@ -39,6 +41,14 @@ const addons = [
     globalName: '',
     src: 'src/index.es.js',
     dist: 'lib/index'
+  },
+  {
+    min: false,
+    type: 'cjs',
+    suffix: '.js',
+    globalName: '',
+    src: 'src/core.js',
+    dist: 'lib/v-charts-core'
   }
 ]
 pkg = pkg.concat(addons)
@@ -59,6 +69,10 @@ function rollupFn (item) {
     resolve({
       extensions: ['.js', '.vue']
     }),
+    alias({
+      resolve: ['js'],
+      './v-charts-core': path.resolve(__dirname, '../src/core')
+    }),
     babel({
       exclude: 'node_modules/**',
       plugins: ['external-helpers']
@@ -66,9 +80,14 @@ function rollupFn (item) {
   ]
   if (item.min) plugins.push(uglify({}, minify))
 
+  let external = id => /^(echarts)/.test(id)
+  if (item.type === 'cjs') {
+    external = id => /(^(echarts|numerify)|\/v-charts-core$)/.test(id)
+  }
+
   rollup.rollup({
     input: item.src,
-    external: id => /^(echarts)/.test(id),
+    external,
     plugins
   }).then(function (bundle) {
     return bundle.write({
